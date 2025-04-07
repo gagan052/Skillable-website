@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from "react";
+import React, { useReducer, useState, useEffect } from "react";
 import "./Add.scss";
 import { gigReducer, INITIAL_STATE } from "../../reducers/gigReducer";
 import upload from "../../utils/upload";
@@ -10,6 +10,18 @@ const Add = () => {
   const [singleFile, setSingleFile] = useState(undefined);
   const [files, setFiles] = useState([]);
   const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState(null);
+  
+  // Get current user from localStorage
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const navigate = useNavigate();
+  
+  // Check if user is a seller
+  useEffect(() => {
+    if (!currentUser || !currentUser.isSeller) {
+      setError("Only sellers can create gigs!");
+    }
+  }, []);
 
   const [state, dispatch] = useReducer(gigReducer, INITIAL_STATE);
 
@@ -29,6 +41,11 @@ const Add = () => {
   };
 
   const handleUpload = async () => {
+    if (!singleFile) {
+      setError("Please select a cover image");
+      return;
+    }
+    
     setUploading(true);
     try {
       const cover = await upload(singleFile);
@@ -41,12 +58,13 @@ const Add = () => {
       );
       setUploading(false);
       dispatch({ type: "ADD_IMAGES", payload: { cover, images } });
+      setError(null); // Clear any errors after successful upload
     } catch (err) {
+      setUploading(false);
+      setError("Error uploading images. Please try again.");
       console.log(err);
     }
   };
-
-  const navigate = useNavigate();
 
   const queryClient = useQueryClient();
 
@@ -56,19 +74,70 @@ const Add = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["myGigs"]);
+      navigate("/mygigs");
     },
+    onError: (error) => {
+      setError(error.response?.data || "Something went wrong!");
+      console.error("Error creating gig:", error);
+    }
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    // Validate required fields
+    if (!currentUser?.isSeller) {
+      setError("Only sellers can create gigs!");
+      return;
+    }
+    
+    // Check each required field individually and provide specific error messages
+    if (!state.title) {
+      setError("Please enter a title");
+      return;
+    }
+    if (!state.cat) {
+      setError("Please select a category");
+      return;
+    }
+    if (!state.desc) {
+      setError("Please enter a description");
+      return;
+    }
+    if (!state.shortTitle) {
+      setError("Please enter a service title");
+      return;
+    }
+    if (!state.shortDesc) {
+      setError("Please enter a short description");
+      return;
+    }
+    if (!state.deliveryTime) {
+      setError("Please enter delivery time");
+      return;
+    }
+    if (!state.revisionNumber) {
+      setError("Please enter revision number");
+      return;
+    }
+    if (!state.price) {
+      setError("Please enter a price");
+      return;
+    }
+    if (!state.cover) {
+      setError("Please upload a cover image");
+      return;
+    }
+    
+    setError(null);
     mutation.mutate(state);
-    // navigate("/mygigs")
-  };
+  }
 
   return (
     <div className="add">
       <div className="container">
         <h1>Add New Gig</h1>
+        {error && <div className="error">{error}</div>}
         <div className="sections">
           <div className="info">
             <label htmlFor="">Title</label>
@@ -80,10 +149,25 @@ const Add = () => {
             />
             <label htmlFor="">Category</label>
             <select name="cat" id="cat" onChange={handleChange}>
-              <option value="design">Design</option>
-              <option value="web">Web Development</option>
-              <option value="animation">Animation</option>
-              <option value="music">Music</option>
+              <option value="">Select a category</option>
+              <option value="ai_artists">AI Artists</option>
+              <option value="logo_design">Logo Design</option>
+              <option value="wordpress">WordPress</option>
+              <option value="voice_over">Voice Over</option>
+              <option value="video_explainer">Video Explainer</option>
+              <option value="social_media">Social Media</option>
+              <option value="seo">SEO</option>
+              <option value="illustration">Illustration</option>
+              <option value="graphics_design">Graphics & Design</option>
+              <option value="digital_marketing">Digital Marketing</option>
+              <option value="writing_translation">Writing & Translation</option>
+              <option value="video_animation">Video & Animation</option>
+              <option value="music_audio">Music & Audio</option>
+              <option value="programming_tech">Programming & Tech</option>
+              <option value="business">Business</option>
+              <option value="lifestyle">Lifestyle</option>
+              <option value="data">Data</option>
+              <option value="photography">Photography</option>
             </select>
             <div className="images">
               <div className="imagesInputs">

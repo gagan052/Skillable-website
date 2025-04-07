@@ -6,6 +6,7 @@ import Slide from "../../components/slide/Slide";
 import CatCard from "../../components/catCard/CatCard";
 import ProjectCard from "../../components/projectCard/ProjectCard";
 import { cards, projects } from "../../data";
+import Footer from "../../components/footer/Footer";
 
 function Home() {
   return (
@@ -61,7 +62,7 @@ function Home() {
           </div>
         </div>
       </div>
-      <div className="explore">
+      <div className="explore" id="explore">
         <div className="container">
           <h1>Explore the marketplace</h1>
           <div className="items">
@@ -186,11 +187,13 @@ function Home() {
           </div>
         </div>
       </div>
-      <Slide slidesToShow={4} arrowsScroll={4}>
+      <Slide slidesToShow={3} arrowsScroll={2}>
         {projects.map((card) => (
           <ProjectCard key={card.id} card={card} />
         ))}
       </Slide>
+
+      <Footer />
     </div>
   );
 }

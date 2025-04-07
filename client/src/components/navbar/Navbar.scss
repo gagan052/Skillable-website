@@ -108,13 +108,42 @@
     border-bottom: 0.5px solid #ebe9e9;
   }
 
-  .menu {
+  .menu-container {
     width: 100%;
+    overflow-x: hidden;
+    position: relative;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    
+    &:hover {
+      .menu {
+        animation-play-state: paused;
+      }
+    }
+    
+    &::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
+    }
+  }
+
+  .menu {
+    width: max-content;
     padding: 10px 0px;
     display: flex;
-    justify-content: space-between;
+    gap: 24px;
     color: gray;
     font-weight: 300;
     font-family: "Montserrat", sans-serif;
+    white-space: nowrap;
+    animation: scrollMenu 30s linear infinite;
+  }
+  
+  @keyframes scrollMenu {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
   }
 }

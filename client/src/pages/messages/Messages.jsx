@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import newRequest from "../../utils/newRequest";
 import "./Messages.scss";
@@ -10,6 +10,8 @@ const Messages = () => {
 
   const queryClient = useQueryClient();
 
+  const [users, setUsers] = useState({});
+
   const { isLoading, error, data } = useQuery({
     queryKey: ["conversations"],
     queryFn: () =>
@@ -17,6 +19,34 @@ const Messages = () => {
         return res.data;
       }),
   });
+
+  // Fetch user data for each conversation
+  useEffect(() => {
+    const fetchUsers = async () => {
+      if (data) {
+        const userMap = {};
+        
+        // Create an array of promises for all user fetch requests
+        const promises = data.map(async (conversation) => {
+          const userId = currentUser.isSeller ? conversation.buyerId : conversation.sellerId;
+          
+          try {
+            const res = await newRequest.get(`/users/${userId}`);
+            userMap[userId] = res.data;
+          } catch (err) {
+            console.error("Error fetching user:", err);
+            userMap[userId] = { username: "Unknown User" };
+          }
+        });
+        
+        // Wait for all promises to resolve
+        await Promise.all(promises);
+        setUsers(userMap);
+      }
+    };
+    
+    fetchUsers();
+  }, [data, currentUser]);
 
   const mutation = useMutation({
     mutationFn: (id) => {
@@ -58,7 +88,10 @@ const Messages = () => {
                 }
                 key={c.id}
               >
-                <td>{currentUser.isSeller ? c.buyerId : c.sellerId}</td>
+                <td>
+                  {users[currentUser.isSeller ? c.buyerId : c.sellerId]?.username || 
+                   (currentUser.isSeller ? c.buyerId : c.sellerId)}
+                </td>
                 <td>
                   <Link to={`/message/${c.id}`} className="link">
                     {c?.lastMessage?.substring(0, 100)}...

@@ -4,25 +4,69 @@ import GigCard from "../../components/gigCard/GigCard";
 import { useQuery } from "@tanstack/react-query";
 import newRequest from "../../utils/newRequest";
 import { useLocation } from "react-router-dom";
+import { cards } from "../../data";
 
 function Gigs() {
   const [sort, setSort] = useState("sales");
   const [open, setOpen] = useState(false);
   const minRef = useRef();
   const maxRef = useRef();
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   const { search } = useLocation();
+  
+  // Extract category from URL parameters
+  useEffect(() => {
+    const params = new URLSearchParams(search);
+    const category = params.get("cat");
+    if (category) {
+      // Format category for display (replace underscores with spaces and capitalize)
+      const formattedCategory = category
+        .split("_")
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
+      setSelectedCategory(formattedCategory);
+    } else {
+      setSelectedCategory(null);
+    }
+  }, [search]);
 
   const { isLoading, error, data, refetch } = useQuery({
-    queryKey: ["gigs"],
-    queryFn: () =>
-      newRequest
-        .get(
-          `/gigs${search}&min=${minRef.current.value}&max=${maxRef.current.value}&sort=${sort}`
-        )
+    queryKey: ["gigs", search],
+    queryFn: () => {
+      // Initialize min and max values safely
+      const min = minRef.current?.value || "";
+      const max = maxRef.current?.value || "";
+      
+      // Create a new URLSearchParams object
+      const params = new URLSearchParams();
+      
+      // Extract search params from the URL if they exist
+      if (search) {
+        // Remove the leading '?' if it exists
+        const searchParams = new URLSearchParams(search.startsWith('?') ? search.substring(1) : search);
+        // Copy all existing search params
+        searchParams.forEach((value, key) => {
+          params.append(key, value);
+        });
+      }
+      
+      // Add min, max and sort params
+      if (min) params.append("min", min);
+      if (max) params.append("max", max);
+      params.append("sort", sort);
+      
+      // Construct the final query string
+      const queryStr = `/gigs?${params.toString()}`;
+      
+      console.log("Fetching gigs with query:", queryStr);
+      
+      return newRequest
+        .get(queryStr)
         .then((res) => {
           return res.data;
-        }),
+        });
+    },
   });
 
   console.log(data);
@@ -40,13 +84,29 @@ function Gigs() {
     refetch();
   };
 
+  // Find the matching card for the selected category to display its description
+  const getCategoryInfo = () => {
+    if (!selectedCategory) return { title: "All Categories", desc: "Explore all services available on our platform" };
+    
+    const matchingCard = cards.find(
+      card => card.title.toLowerCase() === selectedCategory.toLowerCase()
+    );
+    
+    return matchingCard || { 
+      title: selectedCategory, 
+      desc: `Explore our ${selectedCategory} services` 
+    };
+  };
+  
+  const categoryInfo = getCategoryInfo();
+
   return (
     <div className="gigs">
       <div className="container">
-        <span className="breadcrumbs">SkillAble - Graphics & Design -</span>
-        <h1>AI Artists</h1>
+        <span className="breadcrumbs">SkillAble {selectedCategory ? `- ${selectedCategory} -` : ""}</span>
+        <h1>{categoryInfo.title}</h1>
         <p className="para">
-          Explore the boundaries of art and technology with Liverr's AI artists
+          {categoryInfo.desc}
         </p>
         <div className="menu">
           <div className="left">

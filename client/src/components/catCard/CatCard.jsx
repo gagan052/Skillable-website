@@ -4,7 +4,7 @@ import "./CatCard.scss";
 
 function CatCard({ card }) {
   return (
-    <Link to="/gigs?cat=design">
+    <Link to={`/gigs?cat=${card.title.toLowerCase().replace(/ /g, "_")}`}>
       <div className="catCard">
         <img src={card.img} alt="/catCard" />
         <span className="desc">{card.desc}</span>

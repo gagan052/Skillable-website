@@ -34,18 +34,65 @@ function Navbar() {
     }
   };
 
+  const scrollToFeaturesDark = () => {
+    // Navigate to home page if not already there
+    if (pathname !== "/") {
+      navigate("/");
+      // Wait for navigation to complete before scrolling
+      setTimeout(() => {
+        const featuresDarkSection = document.querySelector(".features.dark");
+        if (featuresDarkSection) {
+          featuresDarkSection.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 100);
+    } else {
+      // Already on home page, just scroll
+      const featuresDarkSection = document.querySelector(".features.dark");
+      if (featuresDarkSection) {
+        featuresDarkSection.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
+
+  const scrollToExplore = () => {
+    // Navigate to home page if not already there
+    if (pathname !== "/") {
+      navigate("/");
+      // Wait for navigation to complete before scrolling
+      setTimeout(() => {
+        const exploreSection = document.getElementById("explore");
+        if (exploreSection) {
+          exploreSection.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 100);
+    } else {
+      // Already on home page, just scroll
+      const exploreSection = document.getElementById("explore");
+      if (exploreSection) {
+        exploreSection.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  };
+
   return (
     <div className={active || pathname !== "/" ? "navbar active" : "navbar"}>
       <div className="container">
         <div className="logo">
-          <Link className="link" to="/">
+          <Link className="link" to="/" onClick={scrollToTop}>
             <span className="text">SkillAble</span>
           </Link>
           <span className="dot">.</span>
         </div>
         <div className="links">
-          <span>SkillAble Business</span>
-          <span>Explore</span>
+          <span onClick={() => scrollToFeaturesDark()}>SkillAble Business</span>
+          <span onClick={() => scrollToExplore()}>Explore</span>
           <span>English</span>
           {!currentUser?.isSeller && <span>Become a Seller</span>}
           {currentUser ? (
@@ -89,34 +136,108 @@ function Navbar() {
       {(active || pathname !== "/") && (
         <>
           <hr />
-          <div className="menu">
-            <Link className="link menuLink" to="/">
-              Graphics & Design
-            </Link>
-            <Link className="link menuLink" to="/">
-              Video & Animation
-            </Link>
-            <Link className="link menuLink" to="/">
-              Writing & Translation
-            </Link>
-            <Link className="link menuLink" to="/">
-              AI Services
-            </Link>
-            <Link className="link menuLink" to="/">
-              Digital Marketing
-            </Link>
-            <Link className="link menuLink" to="/">
-              Music & Audio
-            </Link>
-            <Link className="link menuLink" to="/">
-              Programming & Tech
-            </Link>
-            <Link className="link menuLink" to="/">
-              Business
-            </Link>
-            <Link className="link menuLink" to="/">
-              Lifestyle
-            </Link>
+          <div className="menu-container">
+            <div className="menu">
+              {/* First set of menu items */}
+              <Link className="link menuLink" to="/gigs?cat=graphics_design">
+                Graphics & Design
+              </Link>
+              <Link className="link menuLink" to="/gigs?cat=video_animation">
+                Video & Animation
+              </Link>
+              <Link className="link menuLink" to="/gigs?cat=writing_translation">
+                Writing & Translation
+              </Link>
+              <Link className="link menuLink" to="/gigs?cat=ai_services">
+                AI Services
+              </Link>
+              <Link className="link menuLink" to="/gigs?cat=digital_marketing">
+                Digital Marketing
+              </Link>
+              <Link className="link menuLink" to="/gigs?cat=music_audio">
+                Music & Audio
+              </Link>
+              <Link className="link menuLink" to="/gigs?cat=programming_tech">
+                Programming & Tech
+              </Link>
+              <Link className="link menuLink" to="/gigs?cat=business">
+                Business
+              </Link>
+              <Link className="link menuLink" to="/gigs?cat=lifestyle">
+                Lifestyle
+              </Link>
+              <Link className="link menuLink" to="/gigs?cat=photography">
+                Photography
+              </Link>
+              <Link className="link menuLink" to="/gigs?cat=data">
+                Data
+              </Link>
+              <Link className="link menuLink" to="/gigs?cat=voice_over">
+                Voice Over
+              </Link>
+              <Link className="link menuLink" to="/gigs?cat=video_explainer">
+                Video Explainer
+              </Link>
+              <Link className="link menuLink" to="/gigs?cat=social_media">
+                Social Media
+              </Link>
+              <Link className="link menuLink" to="/gigs?cat=seo">
+                SEO
+              </Link>
+              <Link className="link menuLink" to="/gigs?cat=illustration">
+                Illustration
+              </Link>
+              <Link className="link menuLink" to="/gigs?cat=logo_design">
+                Logo Design
+              </Link>
+              <Link className="link menuLink" to="/gigs?cat=wordpress">
+                WordPress
+              </Link>
+              <Link className="link menuLink" to="/gigs?cat=web_mobile_design">
+                Web & Mobile Design
+              </Link>
+              <Link className="link menuLink" to="/gigs?cat=packaging_design">
+                Packaging Design
+              </Link>
+              <Link className="link menuLink" to="/gigs?cat=book_design">
+                Book Design
+              </Link>
+              
+              {/* Duplicate set of menu items for continuous scrolling */}
+              <Link className="link menuLink" to="/gigs?cat=graphics_design">
+                Graphics & Design
+              </Link>
+              <Link className="link menuLink" to="/gigs?cat=video_animation">
+                Video & Animation
+              </Link>
+              <Link className="link menuLink" to="/gigs?cat=writing_translation">
+                Writing & Translation
+              </Link>
+              <Link className="link menuLink" to="/gigs?cat=ai_services">
+                AI Services
+              </Link>
+              <Link className="link menuLink" to="/gigs?cat=digital_marketing">
+                Digital Marketing
+              </Link>
+              <Link className="link menuLink" to="/gigs?cat=music_audio">
+                Music & Audio
+              </Link>
+              <Link className="link menuLink" to="/gigs?cat=programming_tech">
+                Programming & Tech
+              </Link>
+              <Link className="link menuLink" to="/gigs?cat=business">
+                Business
+              </Link>
+              <Link className="link menuLink" to="/gigs?cat=lifestyle">
+                Lifestyle
+              </Link>
+              <Link className="link menuLink" to="/gigs?cat=photography">
+                Photography
+              </Link>
+              <Link className="link menuLink" to="/gigs?cat=data">
+                Data
+              </Link>
+            </div>
           </div>
           <hr />
         </>
