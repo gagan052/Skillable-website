@@ -1,45 +1,11 @@
-# Dependencies
+# dependencies
 node_modules
-/client/node_modules
-/api/node_modules
 
-# Environment files
+# environment variables
 .env
-.env.local
-.env.development
-.env.production
-.env.test
+api/.env
+client/.env
 
-# Build directories
-/client/dist
-/client/build
-/api/dist
-/api/build
-
-# Logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-logs
-*.log
-
-# IDE specific files
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# OS generated files
+# misc
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# Optional npm cache directory
-.npm
-
-# Optional eslint cache
-.eslintcache
+*/.DS_Store
