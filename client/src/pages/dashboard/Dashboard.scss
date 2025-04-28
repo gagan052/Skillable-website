@@ -1,0 +1,199 @@
+.dashboard {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    
+    h1 {
+      margin-bottom: 30px;
+      color: #404145;
+      text-align: center;
+    }
+
+    .user-info {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+
+      .profile-section {
+        display: flex;
+        gap: 30px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #e4e5e7;
+
+        @media (max-width: 768px) {
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+        }
+
+        .profile-image {
+          img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #1dbf73;
+          }
+        }
+
+        .profile-details {
+          h2 {
+            margin-bottom: 15px;
+            color: #404145;
+          }
+
+          p {
+            margin-bottom: 10px;
+            color: #62646a;
+            
+            strong {
+              color: #404145;
+            }
+          }
+        }
+      }
+
+      .stats-section {
+        h3 {
+          margin-bottom: 20px;
+          color: #404145;
+        }
+        
+        .error-message {
+          background-color: #fff0f0;
+          color: #e74c3c;
+          padding: 10px 15px;
+          border-radius: 5px;
+          margin-bottom: 15px;
+          border-left: 4px solid #e74c3c;
+          font-size: 14px;
+        }
+
+        .stats-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+          gap: 20px;
+
+          .stat-card {
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+
+            &:hover {
+              transform: translateY(-5px);
+              box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+
+            h4 {
+              color: #404145;
+              margin-bottom: 10px;
+            }
+
+            .stat-number {
+              font-size: 32px;
+              font-weight: bold;
+              color: #1dbf73;
+              margin-bottom: 15px;
+              
+              .loading-text {
+                font-size: 24px;
+                color: #999;
+                font-style: italic;
+              }
+              
+              .stat-value {
+                animation: fadeIn 0.5s ease-in-out;
+              }
+            }
+            
+            @keyframes fadeIn {
+              from { opacity: 0; }
+              to { opacity: 1; }
+            }
+
+            a {
+              display: inline-block;
+              color: #1dbf73;
+              text-decoration: none;
+              font-weight: 600;
+              
+              &:hover {
+                text-decoration: underline;
+              }
+            }
+          }
+        }
+      }
+
+      .seller-section {
+        padding-top: 20px;
+        border-top: 1px solid #e4e5e7;
+
+        h3 {
+          margin-bottom: 20px;
+          color: #404145;
+        }
+
+        p {
+          margin-bottom: 20px;
+          color: #62646a;
+        }
+
+        .seller-actions {
+          display: flex;
+          gap: 15px;
+          
+          @media (max-width: 768px) {
+            flex-direction: column;
+          }
+
+          button {
+            padding: 10px 20px;
+            background-color: #1dbf73;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+              background-color: #19a463;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Responsive adjustments
+  @media only screen and (max-width: 2825px) {
+    padding: 0px 700px;
+  }
+
+  @media only screen and (max-width: 2525px) {
+    padding: 0px 500px;
+  }
+
+  @media only screen and (max-width: 2139px) {
+    padding: 0px 300px;
+  }
+
+  @media only screen and (max-width: 1909px) {
+    padding: 0px 50px;
+  }
+
+  @media only screen and (max-width: 631px) {
+    padding: 0px 10px;
+  }
+}

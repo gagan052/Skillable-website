@@ -96,11 +96,19 @@ function Navbar() {
           <span>English</span>
           {!currentUser?.isSeller && <span>Become a Seller</span>}
           {currentUser ? (
-            <div className="user" onClick={() => setOpen(!open)}>
-              <img src={currentUser.img || "/img/noavatar.jpg"} alt="" />
-              <span>{currentUser?.username}</span>
+            <div className="user">
+              <img 
+                src={currentUser.img || "/img/noavatar.jpg"} 
+                alt="" 
+                onClick={() => navigate("/dashboard")} 
+                style={{ cursor: "pointer" }}
+              />
+              <span onClick={() => setOpen(!open)}>{currentUser?.username}</span>
               {open && (
                 <div className="options">
+                  <Link className="link" to="/dashboard">
+                    Dashboard
+                  </Link>
                   {currentUser.isSeller && (
                     <>
                       <Link className="link" to="/mygigs">

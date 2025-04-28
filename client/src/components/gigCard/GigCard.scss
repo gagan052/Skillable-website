@@ -21,6 +21,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      flex-wrap: wrap;
 
       img {
         width: 26px;
@@ -29,7 +30,31 @@
         object-fit: cover;
       }
 
+      .user-info {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        margin-right: auto;
+        
+        .username {
+          font-size: 14px;
+          font-weight: 500;
+        }
+        
+        .followers {
+          font-size: 12px;
+          color: #777;
+        }
+      }
+
       span {
+        margin-right: auto;
+      }
+      
+      .follow-button {
+        margin-left: auto;
+        font-size: 11px;
+        padding: 3px 8px;
       }
     }
 

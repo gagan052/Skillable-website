@@ -1,0 +1,90 @@
+.follow-button {
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+  
+  &.small {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+  
+  &.medium {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+  
+  &.large {
+    font-size: 16px;
+    padding: 10px 20px;
+  }
+  
+  &.following {
+    background-color: #f5f5f5;
+    color: #555;
+    border: 1px solid #ddd;
+    
+    &:hover {
+      background-color: #ffeeee;
+      color: #ff5555;
+      border-color: #ffaaaa;
+    }
+  }
+  
+  &:not(.following) {
+    background-color: #1dbf73;
+    color: white;
+    
+    &:hover {
+      background-color: #19a463;
+    }
+  }
+  
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+  
+  .loading {
+    display: inline-block;
+    animation: pulse 1.4s infinite ease-in-out;
+  }
+  
+  .error-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ff5555;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 10;
+    margin-bottom: 5px;
+    
+    &:after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: #ff5555 transparent transparent transparent;
+    }
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
