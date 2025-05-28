@@ -36,7 +36,7 @@ const connect = async () => {
 
 // app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(cors({
-  origin: ["https://skillable-5u04.onrender.com", "http://localhost:5173"],
+  origin: ["https://skillable-5u04.onrender.com", "https://skillable-5u04.onrender.com"],
   methods: "GET, POST, PUT, DELETE, OPTIONS",
   credentials: true,
   allowedHeaders: ["Content-Type", "Authorization"]
