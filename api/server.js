@@ -35,7 +35,12 @@ const connect = async () => {
 // };
 
 // app.use(cors({ origin: "http://localhost:5173", credentials: true }));
-const allowedOrigins = ["http://localhost:5173", "http://localhost:5175" , "https://skillable-gagan.onrender.com"];
+const allowedOrigins = [
+  "http://localhost:5173", 
+  "http://localhost:5175", 
+  "https://skillable-gagan.onrender.com"
+
+    ];
 
 app.use(cors({
   origin: function (origin, callback) {
