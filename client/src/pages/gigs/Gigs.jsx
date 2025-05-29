@@ -135,10 +135,12 @@ function Gigs() {
         </div>
         <div className="cards">
           {isLoading
-            ? "loading"
-            : error
-            ? "Something went wrong!"
-            : data.map((gig) => <GigCard key={gig._id} item={gig} />)}
+          ? "loading"
+          : error
+          ? "Something went wrong!"
+          : Array.isArray(data?.gigs) && data.gigs.length > 0
+          ? data.gigs.map((gig) => <GigCard key={gig._id} item={gig} />)
+          : "No gigs found"}
         </div>
       </div>
     </div>
