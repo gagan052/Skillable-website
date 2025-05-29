@@ -35,12 +35,24 @@ const connect = async () => {
 // };
 
 // app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+const allowedOrigins = ["http://localhost:5173", "http://localhost:5175" , "https://skillable-gagan.onrender.com"];
+
 app.use(cors({
-  origin: ["http://localhost:5173", "http://localhost:5175"],
+  origin: function (origin, callback) {
+    // allow requests with no origin (like curl, postman)
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = `The CORS policy for this site does not allow access from the specified Origin.`;
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
   methods: "GET, POST, PUT, DELETE, OPTIONS",
   credentials: true,
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
 
 app.options('*', cors());
 
