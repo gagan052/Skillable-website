@@ -70,7 +70,7 @@ function MyGigs() {
   // Debug log to check data structure
   console.log("MyGigs data:", data);
   console.log("Current user:", currentUser);
-  console.log("API base URL:", "https://skillable-saini.onrender.com/api/");
+  console.log("API base URL:", "https://skillable-saini.onrender.com/api/"); 
 
   // Check if the API is properly configured
   useEffect(() => {
