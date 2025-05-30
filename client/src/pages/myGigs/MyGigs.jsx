@@ -70,13 +70,13 @@ function MyGigs() {
   // Debug log to check data structure
   console.log("MyGigs data:", data);
   console.log("Current user:", currentUser);
-  console.log("API base URL:", import.meta.env.VITE_API_BASE_URL);
+  console.log("API base URL:", "https://skillable-saini.onrender.com/api/");
 
   // Check if the API is properly configured
   useEffect(() => {
     const checkApiConnection = async () => {
       try {
-        const response = await fetch(import.meta.env.VITE_API_BASE_URL + 'gigs');
+        const response = await fetch("https://skillable-saini.onrender.com/api/" + 'gigs');
         console.log('API connection test:', response.status, response.statusText);
       } catch (err) {
         console.error('API connection test failed:', err);
