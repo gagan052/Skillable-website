@@ -43,6 +43,7 @@ const allowedOrigins = [
   "https://skillable-gagan-z3vk.onrender.com",
   "https://skillable-5u04.onrender.com",
 
+  
     ];
 
 app.use(cors({
