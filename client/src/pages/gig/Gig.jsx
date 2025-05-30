@@ -5,7 +5,6 @@ import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import newRequest from "../../utils/newRequest";
 import Reviews from "../../components/reviews/Reviews";
-import FollowButton from "../../components/followButton/FollowButton";
 
 function Gig() {
   const { id } = useParams();
@@ -58,10 +57,6 @@ function Gig() {
                   alt=""
                 />
                 <span>{dataUser.username}</span>
-                <div className="user-stats">
-                  <span className="followers">{dataUser.followersCount || 0} followers</span>
-                  <FollowButton userId={userId} size="medium" />
-                </div>
                 {!isNaN(data.totalStars / data.starNumber) && (
                   <div className="stars">
                     {Array(Math.round(data.totalStars / data.starNumber))
@@ -92,7 +87,6 @@ function Gig() {
                   <img src={dataUser.img || "/img/noavatar.jpg"} alt="" />
                   <div className="info">
                     <span>{dataUser.username}</span>
-                    <span className="followers">{dataUser.followersCount || 0} followers</span>
                     {!isNaN(data.totalStars / data.starNumber) && (
                       <div className="stars">
                         {Array(Math.round(data.totalStars / data.starNumber))
@@ -105,10 +99,7 @@ function Gig() {
                         </span>
                       </div>
                     )}
-                    <div className="seller-actions">
-                      <button>Contact Me</button>
-                      <FollowButton userId={userId} size="medium" />
-                    </div>
+                    <button>Contact Me</button>
                   </div>
                 </div>
                 <div className="box">
