@@ -15,12 +15,10 @@ function Gigs() {
 
   const { search } = useLocation();
   
-  // Extract category and search term from URL parameters
+  // Extract category from URL parameters
   useEffect(() => {
     const params = new URLSearchParams(search);
     const category = params.get("cat");
-    const searchTerm = params.get("search");
-    
     if (category) {
       // Format category for display (replace underscores with spaces and capitalize)
       const formattedCategory = category
@@ -28,18 +26,12 @@ function Gigs() {
         .map(word => word.charAt(0).toUpperCase() + word.slice(1))
         .join(" ");
       setSelectedCategory(formattedCategory);
-    } else if (searchTerm) {
-      // If there's a search term but no category, show it as a custom category
-      setSelectedCategory(`Search: ${searchTerm}`);
     } else {
       setSelectedCategory(null);
     }
-    
-    console.log("URL parameters:", { category, searchTerm });
   }, [search]);
 
   const { isLoading, error, data, refetch } = useQuery({
-    queryKey: ["gigs", search],
     queryFn: async () => {
       try {
         // Initialize min and max values safely
@@ -133,22 +125,9 @@ function Gigs() {
         throw err; // Let React Query handle the error
       }
     },
-    retry: 1, // Retry once if the request fails
-    refetchOnWindowFocus: false, // Don't refetch when window regains focus
-    staleTime: 1000 * 60 * 5, // Data is fresh for 5 minutes
   });
 
-  // Debug log to check data structure and type
-  useEffect(() => {
-    if (data) {
-      console.log("Data received:", data);
-      console.log("Data type:", typeof data, Array.isArray(data) ? "(is array)" : "(not array)");
-      console.log("Data length:", Array.isArray(data) ? data.length : 0);
-      if (Array.isArray(data) && data.length > 0) {
-        console.log("First gig sample:", data[0]);
-      }
-    }
-  }, [data]);
+  console.log(data);
 
   const reSort = (type) => {
     setSort(type);
@@ -213,28 +192,11 @@ function Gigs() {
           </div>
         </div>
         <div className="cards">
-
-
-        
-          {isLoading ? (
-            <div className="loading">Loading gigs...</div>
-          ) : error ? (
-            <div className="error">
-              <p>{error.response?.data?.message || error.message || "Something went wrong!"}</p>
-              <button onClick={() => refetch()} className="retry-button">Retry</button>
-            </div>
-          ) : Array.isArray(data) && data.length > 0 ? (
-            data.map((gig) => <GigCard key={gig._id} item={gig} />)
-          ) : (
-            <div className="no-results">
-              <img src="/img/empty.png" alt="No gigs found" />
-              <h3>No gigs found</h3>
-              <p>Try adjusting your search or filters</p>
-              <button onClick={() => refetch()} className="retry-button">Refresh</button>
-            </div>
-          )}
-
-
+          {isLoading
+            ? "loading"
+            : error
+            ? "Something went wrong!"
+            : data.map((gig) => <GigCard key={gig._id} item={gig} />)}
         </div>
       </div>
     </div>
@@ -242,3 +204,4 @@ function Gigs() {
 }
 
 export default Gigs;
+
