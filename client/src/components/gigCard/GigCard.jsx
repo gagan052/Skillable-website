@@ -3,7 +3,6 @@ import "./GigCard.scss";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import newRequest from "../../utils/newRequest";
-import FollowButton from "../followButton/FollowButton";
 
 const GigCard = ({ item }) => {
   const { isLoading, error, data } = useQuery({
@@ -25,11 +24,7 @@ const GigCard = ({ item }) => {
           ) : (
             <div className="user">
               <img src={data.img || "/img/noavatar.jpg"} alt="" />
-              <div className="user-info">
-                <span className="username">{data.username}</span>
-                <span className="followers">{data.followersCount || 0} followers</span>
-              </div>
-              <FollowButton userId={item.userId} size="small" />
+              <span>{data.username}</span>
             </div>
           )}
           <p className="desc">{item.desc}</p>
