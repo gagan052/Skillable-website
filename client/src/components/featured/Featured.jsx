@@ -7,6 +7,9 @@ function Featured() {
   const [filteredOptions, setFilteredOptions] = useState([]);
   const navigate = useNavigate();
   
+  // Get current user from localStorage
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  
   // Complete list of all available options
   const allOptions = [
     "AI Artists",
@@ -95,32 +98,36 @@ function Featured() {
           <h1>
             Find the perfect <span>freelance</span> services for your business
           </h1>
-          <div className="search">
-            <div className="searchInput">
-              <img src="./img/search-line.png" alt="" />
-              <input
-                type="search"
-                list="browsers"
-                placeholder='Try "Gig Title"'
-                onChange={handleInputChange}
-                onInput={handleInputSelect}
-                value={input}
-              />
-              <datalist id="browsers">
-                {filteredOptions.map((option, index) => (
-                  <option key={index} value={option}></option>
-                ))}
-              </datalist>
-            </div>
-            <button onClick={handleSubmit}>Search</button>
-          </div>
-          <div className="popular">
-            <span>Popular:</span>
-            <button>Web Design</button>
-            <button>WordPress</button>
-            <button>Logo Design</button>
-            <button>AI Services</button>
-          </div>
+          {currentUser && (
+            <>
+              <div className="search">
+                <div className="searchInput">
+                  <img src="./img/search-line.png" alt="" />
+                  <input
+                    type="search"
+                    list="browsers"
+                    placeholder='Try "Gig Title"'
+                    onChange={handleInputChange}
+                    onInput={handleInputSelect}
+                    value={input}
+                  />
+                  <datalist id="browsers">
+                    {filteredOptions.map((option, index) => (
+                      <option key={index} value={option}></option>
+                    ))}
+                  </datalist>
+                </div>
+                <button onClick={handleSubmit}>Search</button>
+              </div>
+              <div className="popular">
+                <span>Popular:</span>
+                <button>Web Design</button>
+                <button>WordPress</button>
+                <button>Logo Design</button>
+                <button>AI Services</button>
+              </div>
+            </>
+          )}
         </div>
         <div className="right">
           <img src="./img/intern.jpg" alt="" />
